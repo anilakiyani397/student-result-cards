@@ -19,6 +19,8 @@ let students = [
 ];
 
 let topper = 0;
+let totalAverage = 0;
+let passedStudents = 0;
 
 for (let i = 0; i < students.length; i++) {
 
@@ -50,10 +52,42 @@ for (let i = 0; i < students.length; i++) {
     students[i].grade = grade;
     students[i].status = status;
 
+    totalAverage += average;
+
+    if (status === "Pass") {
+        passedStudents++;
+    }
+
     if (average > students[topper].average || i === 0) {
         topper = i;
     }
 }
+
+let overallAverage = totalAverage / students.length;
+
+let summaryContainer = document.getElementById("summary-container");
+
+summaryContainer.innerHTML = `
+    <div class="summary-card">
+        <h3>Total Students</h3>
+        <p>${students.length}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>Overall Average</h3>
+        <p>${overallAverage.toFixed(2)}%</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>Passed Students</h3>
+        <p>${passedStudents}</p>
+    </div>
+
+    <div class="summary-card">
+        <h3>Class Topper</h3>
+        <p>${students[topper].name}</p>
+    </div>
+`;
 
 let container = document.getElementById("result-container");
 
@@ -65,10 +99,10 @@ for (let i = 0; i < students.length; i++) {
         <div class="result-card">
             <h3>${student.name}</h3>
             <p>Marks: ${student.marks.join(", ")}</p>
-            <p>Average: ${student.average.toFixed(2)}</p>
+            <p>Average: ${student.average.toFixed(2)}%</p>
             <p>Grade: ${student.grade}</p>
             <p>Status: ${student.status}</p>
-            ${i === topper ? "<strong>Topper</strong>" : ""}
+            ${i === topper ? "<strong>Class Topper</strong>" : ""}
         </div>
     `;
 }
